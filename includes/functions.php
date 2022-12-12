@@ -32,8 +32,7 @@ function SpotifySearch() {
         $api = new SpotifyWebAPI\SpotifyWebAPI();
         $api->setAccessToken($accessToken);
 
-        echo $_GET["search"];
-        $results = $api->search($_GET["search"], 'album,artist,playlist,track');
+        $results = $api->search($_GET["search"], 'artist,playlist,track');
         print_r($results);
     }
 }
