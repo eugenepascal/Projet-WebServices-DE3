@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS playlist_track (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     playlist_id INTEGER NOT NULL,
     track_id INTEGER NOT NULL,
-    FOREIGN KEY (playlist_id) 
+    FOREIGN KEY (playlist_id) -- Add foreign keys
         REFERENCES playlist (id)
             ON DELETE CASCADE
             ON UPDATE CASCADE,
@@ -55,10 +55,3 @@ CREATE TABLE IF NOT EXISTS playlist_track (
             ON DELETE CASCADE
             ON UPDATE CASCADE
 );
-
--- Add some dummy values...
---INSERT INTO user (username, password)
---VALUES ("dfh", "azerty"),
---        ("jujututu", "tutupigeon"),
---        ("matt_le_boss", "uydfgre"),
---        ("issa_de_qista", "kjhgf");
