@@ -32,7 +32,39 @@ function SpotifySearch() {
         $api = new SpotifyWebAPI\SpotifyWebAPI();
         $api->setAccessToken($accessToken);
 
-        $results = $api->search($_GET["search"], 'artist,playlist,track');
-        print_r($results);
+        $results = $api->search($_GET["search"], 'album');
+
+        ?>
+
+        <style>.album img {
+            height: 100px;
+        }
+        </style>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Nom de l'album</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if (!empty($results->albums->items)) {
+                    foreach($results->albums->items as $album) {
+                        if(isset($album->images[0]->url)) {
+                            ?>
+                            <tr>
+                                <td><img src="<?php echo $album->images[0]->url; ?>" alt="<?php echo $album->name; ?>" class="album"></td>
+                                <td><?php echo $album->name; ?></td>
+                            </tr>
+                            <?php
+                        }
+                    }
+                }
+                ?>
+            </tbody>
+        </table>
+        <?php
     }
 }
