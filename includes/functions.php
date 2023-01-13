@@ -60,6 +60,19 @@ function EY_MR_SpotifySearch() {
         switch($search_type) {
             case 'artist':
                 $results = $api->search($search_query, 'artist');
+                break;
+
+            case 'album':
+                $results = $api->search($search_query, 'album');
+                break;
+
+            case 'track':
+                $results = $api->search($search_query, 'track');
+                break;
+        }
+
+        switch($search_type) {
+            case 'artist':
                 ?>
                 <table>
                     <thead>
@@ -92,7 +105,6 @@ function EY_MR_SpotifySearch() {
                 <?php
                 break;
             case 'album':
-                $results = $api->search($search_query, 'album');
                 ?>
                 <table>
                     <thead>
@@ -125,7 +137,6 @@ function EY_MR_SpotifySearch() {
                 <?php
                 break;
             case 'track':
-                $results = $api->search($search_query, 'track');
                 ?>
                 <table>
                     <thead>
