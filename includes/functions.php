@@ -7,6 +7,25 @@ require 'vendor/autoload.php';
 // Hook
 add_action("wp_head", "SpotifySearchBar");
 add_action("wp_head", "SpotifySearch");
+add_action("wp_footer", "Add_Date");
+
+//Spotify plugin background color
+
+function change_plugin_background_color_EY_MR() {
+    echo '<style type="text/css">';
+    echo '.plugin-container {
+            background: linear-gradient(to bottom, #F5F5DC, #F5F5DC);
+          }';
+    echo '</style>';
+}
+
+//welcome part
+function add_welcome_sentence() {
+    echo '<div class="welcome-sentence-container">';
+    echo '<p class="welcome-sentence">Welcome to our plugin!</p>';
+    echo '</div>';
+}
+
 
 function SpotifySearchBar() {
     echo "
@@ -17,6 +36,23 @@ function SpotifySearchBar() {
     </form>
     </center>
     ";
+}
+
+function Add_Date()
+{
+
+$date = date("d-m-Y");
+$heure = date("H:i:s");
+$sec = date("s");
+
+  if ($sec % 2 == 0) //Afficher l'heure si secondes paires !
+  {
+    echo("Nous sommes le $date et il est $heure");
+  }
+  else // si secondes impaires
+  {
+    echo "Perdu : $sec";
+  }
 }
 
 function SpotifySearch() {
@@ -34,11 +70,13 @@ function SpotifySearch() {
 
         $results = $api->search($_GET["search"], 'album');
 
+
         ?>
 
         <style>.album img {
             height: 100px;
         }
+
         </style>
 
         <table>
@@ -67,4 +105,34 @@ function SpotifySearch() {
         </table>
         <?php
     }
+
+
+
+}
+
+
+
+
+
+// Partie Admin Control Panel
+
+function theme_options_panel(){
+add_menu_page('Theme page title', 'Spotify Admin control panel', 'manage_options', 'theme-options', 'wps_theme_func');
+}
+add_action('admin_menu', 'theme_options_panel');
+
+function wps_theme_func(){
+    echo "
+    <center>
+    <form action=\"\" method=\"GET\">
+    <input name=\"search\" id=\"search\" type=\"text\" placeholder=\"Search for a record\">
+    <input id=\"submit\" type=\"submit\" value=\"submit\">
+    </form>
+    </center>
+    ";
+    echo '<div class="top-bottom-button-container">';
+    echo '<button type="button" class="top-bottom-button" id="button1">Delete a record</button>';
+    echo '<button type="button" class="top-bottom-button" id="button2">Delete all the records</button>';
+    echo '</div>';
+
 }
