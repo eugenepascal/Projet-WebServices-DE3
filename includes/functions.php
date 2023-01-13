@@ -79,7 +79,7 @@ function EY_MR_SpotifySearch() {
         
             $track_id = $_GET['track_id'];
 
-		$iframe = '<iframe src="https://open.spotify.com/embed/track/'.$track_id.'" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
+		    $iframe = '<iframe src="https://open.spotify.com/embed/track/'.$track_id.'" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
             echo $iframe;
         } else {
         $search_type = $_GET['search_type'];
@@ -95,15 +95,66 @@ function EY_MR_SpotifySearch() {
 
         switch($search_type) {
             case 'artist':
-                $results = $api->search($search_query, 'artist');
+
+           
+                    $db = new PDO('sqlite:database.db');
+                    $query = "SELECT * FROM artist WHERE name == $search_query";
+                    $results = $db->exec($query);
+
+                if(empty($results)) {
+                    $results = $api->search($search_query, 'artist');
+
+                        if (!empty($results->artists->items)) {
+                            foreach($results->artists->items as $artist) {
+                                $artist_uri = $artist->external_urls->spotify;
+                                $artist_image_uri = $artist->images[0]->url;
+                                $query = "INSERT INTO artist (name, uri, image_uri) VALUES ('$artist->name','$artist_uri', '$artist_image_uri')";
+                                $db->exec($query);
+
+                            }
+                        }
+                }
+                
                 break;
 
             case 'album':
+                $db = new PDO('sqlite:database.db');
+                $query = "SELECT * FROM album WHERE name == $search_query";
+                $results = $db->exec($query);
+
+            if(empty($results)) {
                 $results = $api->search($search_query, 'album');
+
+                    if (!empty($results->albums->items)) {
+                        foreach($results->albums->items as $album) {
+                            $album_uri = $album->external_urls->spotify;
+                            $album_image_uri = $album->images[0]->url;
+                            $query = "INSERT INTO album (name, uri, image_uri) VALUES ('$album->name','$album_uri', '$album_image_uri')";
+                            $db->exec($query);
+
+                        }
+                    }
+            }
                 break;
 
             case 'track':
+                $db = new PDO('sqlite:database.db');
+                $query = "SELECT * FROM track WHERE name == $search_query";
+                $results = $db->exec($query);
+
+            if(empty($results)) {
                 $results = $api->search($search_query, 'track');
+
+                    if (!empty($results->tracks->items)) {
+                        foreach($results->tracks->items as $track) {
+                            $track_uri = $track->external_urls->spotify;
+                            $track_image_uri = $track->images[0]->url;
+                            $query = "INSERT INTO track (name, uri, image_uri) VALUES ('$track->name','$track_uri', '$track_image_uri')";
+                            $db->exec($query);
+
+                        }
+                    }
+            }
                 break;
         }
 
@@ -211,10 +262,6 @@ function EY_MR_SpotifySearch() {
     }
 
 }
-
-
-
-
 
 // Partie Admin Control Panel
 
