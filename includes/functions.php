@@ -5,9 +5,8 @@
 require 'vendor/autoload.php';
 
 // Hook
-<<<<<<< HEAD
-add_action("wp_head", "SpotifySearchBar");
-add_action("wp_head", "SpotifySearch");
+add_action("wp_head", "EY_MR_SpotifySearchBar");
+add_action("wp_head", "EY_MR_SpotifySearch");
 add_action("wp_footer", "Add_Date");
 
 //Spotify plugin background color
@@ -27,10 +26,6 @@ function add_welcome_sentence() {
     echo '</div>';
 }
 
-=======
-add_action("wp_head", "EY_MR_SpotifySearchBar");
-add_action("wp_head", "EY_MR_SpotifySearch");
->>>>>>> 75757fd703b0a15ecac216fcb7e567ead4dfc1e9
 
 function EY_MR_SpotifySearchBar() {
     ?>
@@ -50,7 +45,6 @@ function EY_MR_SpotifySearchBar() {
     <?php
 }
 
-<<<<<<< HEAD
 function Add_Date()
 {
 
@@ -68,10 +62,7 @@ $sec = date("s");
   }
 }
 
-function SpotifySearch() {
-=======
 function EY_MR_SpotifySearch() {
->>>>>>> 75757fd703b0a15ecac216fcb7e567ead4dfc1e9
     if (!empty($_GET)) {
         $session = new SpotifyWebAPI\Session(
             '8d4e36b37abf4965917bc9fd437ab54d',
@@ -88,15 +79,9 @@ function EY_MR_SpotifySearch() {
         
             $track_id = $_GET['track_id'];
 
-<<<<<<< HEAD
-
-        ?>
-=======
-            $iframe = '<iframe src="https://open.spotify.com/embed/track/'.$track_id.'" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
+		$iframe = '<iframe src="https://open.spotify.com/embed/track/'.$track_id.'" width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>';
             echo $iframe;
         } else {
->>>>>>> 75757fd703b0a15ecac216fcb7e567ead4dfc1e9
-
         $search_type = $_GET['search_type'];
         $search_query = $_GET['search'];
 
@@ -222,9 +207,8 @@ function EY_MR_SpotifySearch() {
                 break;
         }
     }
-<<<<<<< HEAD
 
-
+    }
 
 }
 
@@ -252,10 +236,6 @@ function wps_theme_func(){
     echo '<button type="button" class="top-bottom-button" id="button1">Delete a record</button>';
     echo '<button type="button" class="top-bottom-button" id="button2">Delete all the records</button>';
     echo '</div>';
-
 }
-=======
-}}
-?>
 
->>>>>>> 75757fd703b0a15ecac216fcb7e567ead4dfc1e9
+?>
